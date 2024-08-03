@@ -1,6 +1,10 @@
 FROM centos:7.8.2003
 
-RUN yum -y makecache \
+RUN sed -i.bak \
+      -e 's|^mirrorlist=|#mirrorlist=|g' \
+      -e 's|^#baseurl=http://mirror.centos.org/centos|baseurl=https://mirrors.ustc.edu.cn/centos-vault/centos|g' \
+      /etc/yum.repos.d/CentOS-Base.repo \
+    && yum -y makecache \
     && yum install -y createrepo \
     && yum install -y yum-utils \
     && yum install -y epel-release \
